@@ -1,25 +1,29 @@
 package com.microservices.usuarioservice.controllers.v1;
 
+import com.microservices.usuarioservice.application.feature.usuario.commands.AgregarUsuarioCommand;
 import com.microservices.usuarioservice.controllers.BaseController;
-import com.microservices.usuarioservice.application.feature.usuario.command.AgregarUsuarioCommand;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.concurrent.CompletableFuture;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Usuario")
 @RestController
+@RequestMapping("/api/v1/usuarios")
 public class UsuarioController extends BaseController {
 
-    @GetMapping("usuario/listar")
+    public UsuarioController(CommandGateway commandGateway, QueryGateway queryGateway) {
+        super(commandGateway, queryGateway);
+    }
+
+    @GetMapping("/listar")
     public String listar() {
         return buildResponse("Listado de usuarios");
     }
 
     @PostMapping("/crear")
     public String crear(@RequestBody AgregarUsuarioCommand command) {
+        sendCommand(command);
         return buildResponse("Usuario creado");
     }
 

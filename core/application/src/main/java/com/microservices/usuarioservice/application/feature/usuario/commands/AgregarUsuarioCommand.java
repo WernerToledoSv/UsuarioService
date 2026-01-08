@@ -3,6 +3,8 @@ package com.microservices.usuarioservice.application.feature.usuario.commands;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
+import lombok.Data;
+
 
 @Data
 @NoArgsConstructor

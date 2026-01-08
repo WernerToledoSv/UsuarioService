@@ -1,4 +1,4 @@
-package core.domain.Base;
+package com.example.domain.Base;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

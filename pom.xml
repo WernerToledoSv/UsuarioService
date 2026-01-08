@@ -21,19 +21,29 @@
     </modules>
 
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
         <spring.boot.version>4.0.0</spring.boot.version>
         <springdoc.version>2.3.0</springdoc.version>
         <lombok.version>1.18.30</lombok.version>
+        <axon.version>4.9.0</axon.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Boot dependencies -->
+            <!-- Spring Boot BOM -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Axon BOM -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-bom</artifactId>
+                <version>${axon.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -51,7 +61,6 @@
                 <artifactId>spring-boot-starter-web</artifactId>
             </dependency>
 
-
             <!-- Lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -60,16 +69,23 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- mediador de java -->
+            <!-- Axon Framework Starter -->
             <dependency>
                 <groupId>org.axonframework</groupId>
                 <artifactId>axon-spring-boot-starter</artifactId>
-                <version>4.6.3</version>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <!-- Jakarta Validation -->
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <build>
+   <build>
         <pluginManagement>
             <plugins>
                 <!-- Spring Boot Maven Plugin -->
@@ -79,18 +95,25 @@
                     <version>${spring.boot.version}</version>
                 </plugin>
 
-                <!-- Compiler plugin para Java 25 -->
+                <!-- Compiler plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
                     <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <!-- Usar release en lugar de source/target -->
+                        <release>${java.version}</release>
+                        <!-- Procesamiento de anotaciones para Lombok -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
 </project>
