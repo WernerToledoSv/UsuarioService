@@ -22,7 +22,9 @@
 
     <properties>
         <java.version>25</java.version>
-        <spring-boot.version>3.4.0</spring-boot.version>
+        <spring.boot.version>4.0.0</spring.boot.version>
+        <springdoc.version>2.3.0</springdoc.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -31,19 +33,64 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-            <!-- SpringDoc -->
+            <!-- Swagger / OpenAPI -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>2.5.0</version>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!-- Spring Boot Starter Web -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+
+
+            <!-- Lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- mediador de java -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring-boot-starter</artifactId>
+                <version>4.6.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot Maven Plugin -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                </plugin>
+
+                <!-- Compiler plugin para Java 25 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
